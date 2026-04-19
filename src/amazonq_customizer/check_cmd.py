@@ -11,12 +11,13 @@ def check_customizations(root_dir: Path, is_global: bool):
     else:
         base_dir = root_dir.absolute()
         rules_dir = base_dir / ".amazonq" / "rules"
-        prompts_dir = None
+        prompts_dir = base_dir / ".amazonq" / "prompts"
 
     if prompts_dir and prompts_dir.exists():
         prompts = list(prompts_dir.glob("*.md"))
         if prompts:
-            typer.echo(f"Global Prompts Directory: {prompts_dir}")
+            label = "Global" if is_global else "Project"
+            typer.echo(f"{label} Prompts Directory: {prompts_dir}")
             for md_file in prompts:
                 typer.echo(f"  - {md_file.name}")
             found_any = True

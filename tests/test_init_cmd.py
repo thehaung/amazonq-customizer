@@ -8,7 +8,7 @@ def test_initialize_directories_local(tmp_path):
     initialize_directories(root_dir=target_dir, is_global=False)
     
     assert (target_dir / ".amazonq" / "rules").exists()
-    assert (target_dir / "prompts").exists()
+    assert not (target_dir / ".amazonq" / "prompts").exists()
 
 def test_initialize_directories_global(tmp_path, monkeypatch):
     home_dir = tmp_path / "home"

@@ -50,3 +50,5 @@ htmlcov/
 bin/
 .ruff_cache/
 .worktrees/
+.docs/
+.sources/
