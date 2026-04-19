@@ -7,3 +7,4 @@ def test_app_exists():
     result = runner.invoke(app, ["--help"])
     assert result.exit_code == 0
     assert "init" in result.stdout
+    assert "check" in result.stdout
