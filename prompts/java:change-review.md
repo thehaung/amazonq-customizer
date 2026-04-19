@@ -1,6 +1,6 @@
 ---
-name: java-pr-review
-description: Use when asked to review Java code changes, audit a local branch, check code before merging, or review a Pull Request.
+name: java-change-review
+description: Use when reviewing Java code changes, checking a branch diff, auditing a pull request for bugs, security flaws, missing tests, or clean code violations. Also use for pre-merge review.
 ---
 
 # Java Code & Pull Request Review Workflow
@@ -9,6 +9,25 @@ description: Use when asked to review Java code changes, audit a local branch, c
 A systematic, multi-pass review process for Java Pull Requests and local branch changes. You MUST perform the review in strict phases, acquiring the data safely, storing it locally, and applying specific specialized lenses only when triggered.
 
 **Core Principle:** Find critical flaws first. Nitpicks come last. Tests are non-negotiable.
+
+## Prerequisites
+
+**SUB-SKILL LOADING:** AmazonQ loads all prompt files from `~/.aws/amazonq/prompts/` (global) or `.amazonq/prompts/` (local) at conversation start. The sub-skills referenced below are available in your context. When a phase says to apply a sub-skill, focus your attention on those principles — you do not need to read additional files.
+**FALLBACK:** If a referenced sub-skill file is not available, apply general best practices for that domain.
+
+## When to Use
+
+- Reviewing Java code changes in a Pull Request
+- Checking a branch diff before merging
+- Auditing code changes for bugs, security flaws, or missing tests
+- Pre-merge review to ensure code quality
+
+## When NOT to Use
+
+- **Non-Java code:** Use language-specific review prompts for Python, JavaScript, etc.
+- **Single file review:** Use `java:code-review.md` for focused single-file reviews
+- **Documentation-only changes:** No code review needed for pure documentation PRs
+- **No diff available:** Get the diff first — review requires seeing actual changes
 
 ## Review Pipeline
 
@@ -40,9 +59,6 @@ digraph pr_review_flow {
 }
 ```
 
-**REQUIRED BACKGROUND:** You MUST reference `java:code-review.md` for baseline standards before beginning the actual review phases.
-*Note on Prompts Location: Depending on the user's setup, the required reference prompts mentioned below (e.g., `java:clean-code.md`) will be located EITHER in the local project directory (e.g., `.amazonq/prompts/`) OR in the global directory `~/.aws/amazonq/prompts/`. You must locate and read the correct file.*
-
 ### Phase 0: Data Acquisition & Diff Extraction
 Before reviewing any code, you MUST acquire the diff using shell commands and save it locally.
 
@@ -60,33 +76,44 @@ Before reviewing any code, you MUST acquire the diff using shell commands and sa
 5. Run `git diff origin/<parent-branch>...HEAD > tmp/<current-branch-name>/diff.patch` to save the changes locally.
 6. Review the diff from the saved file.
 
+**STOP. VERIFY:** Have you saved the diff to a local file? If not, stop and save it now. Do not proceed without a saved diff.
+
+**Edge Cases:**
+- If the diff is empty, report 'No changes found' and stop.
+- If the diff has >50 files, analyze file by file. Do NOT attempt to review the entire diff in one pass.
+
 ### Phase 1: Intent & Architecture Scan
 - **Goal:** Understand *what* this PR/branch does and if the design is sound based on the saved diff.
 - **Action:** Read the diff. Does it solve the stated problem?
-- **Trigger:** If the PR introduces new classes, interfaces, or significant refactoring (>100 lines), **REQUIRED:** Apply `java:solid-principles.md` and `java:design-patterns.md`.
+- **ALWAYS:** Apply **REQUIRED SUB-SKILL:** `java:code-review.md` (baseline standards) and **REQUIRED SUB-SKILL:** `java:clean-code.md` (clean code lens).
+- **IF new classes/interfaces/refactoring (>100 lines):** Also apply **REQUIRED SUB-SKILL:** `java:solid-principles.md` and **REQUIRED SUB-SKILL:** `java:design-patterns.md`.
+
+**STOP. VERIFY:** Did you identify the PR's intent and architectural impact? Which sub-skills (solid-principles, design-patterns, clean-code, code-review) apply based on what you found?
 
 ### Phase 2: Targeted Deep Dives
 Do not blindly review line-by-line. Look for specific triggers in the diff:
-- **Trigger:** Endpoints, SQL/JPA queries, or user input? **REQUIRED:** Apply `java:security-audit.md`.
-- **Trigger:** `@Async`, `Runnable`, `CompletableFuture`, or synchronized blocks? **REQUIRED:** Apply `java:concurrency-review.md`.
-- **Trigger:** Heavy loops, nested Streams, or large data transformations? **REQUIRED:** Apply `java:performance-smell-detection.md`.
-- **Trigger:** Messy naming, bloated methods, boolean blindness? **REQUIRED:** Apply `java:clean-code.md`.
+- **Trigger:** Endpoints, SQL/JPA queries, or user input? **REQUIRED SUB-SKILL:** `java:security-audit.md`
+- **Trigger:** `@Async`, `Runnable`, `CompletableFuture`, or synchronized blocks? **REQUIRED SUB-SKILL:** `java:concurrency-review.md`
+- **Trigger:** Heavy loops, nested Streams, or large data transformations? **REQUIRED SUB-SKILL:** `java:performance-smell-detection.md`
+
+**STOP. VERIFY:** Did you check each trigger category? Which triggers were found in the diff? Which sub-skills did you apply?
 
 ### Phase 3: Test Verification (The Iron Law)
 - **Goal:** Verify the code proves its own correctness.
 - **Action:** Review `src/test/java` changes in the diff.
-- **REQUIRED:** Apply `java:test-quality.md`. Check for JUnit 5 usage and AssertJ assertions.
+- **REQUIRED SUB-SKILL:** `java:test-quality.md` — Check for JUnit 5 usage and AssertJ assertions.
+
+**STOP. VERIFY:** Are there tests for ALL new logic and bug fixes? If any test coverage is missing, the review MUST flag this as a Critical Blocker.
 
 ## Red Flags - STOP and Reject Immediately
 If you see any of the following, do not proceed to nitpicking. The code must be rejected in the final output:
 - **No tests included** for new logic or bug fixes.
 - **Commented-out code** or `System.out.println` left in the diff.
 - **Unhandled generic exceptions** (`catch (Exception e) {}`).
-- **Logic mixed in controllers** instead of delegated to services (Reference: `java:spring-boot-patterns.md`).
+- **Logic mixed in controllers** instead of delegated to services **REQUIRED SUB-SKILL:** `java:spring-boot-patterns.md`
 
 ### Phase 4: Output Generation
 You MUST save the final review result to the local filesystem. Do not just print a wall of text to the chat.
-
 1. Determine the path based on Phase 0:
     - For PRs: `tmp/<pr-number>/code-review-result.md`
     - For Local branches: `tmp/<current-branch-name>/code-review-result.md`
@@ -117,3 +144,7 @@ You MUST format your final response file exactly like this.
 | "I'll just list all my findings at once." | Burying critical bugs under style nitpicks is dangerous. Use the strict output format. |
 | "I'll review the tests later." | Tests are Phase 3. They are part of the review, not an afterthought. |
 | "I'll just read the diff in memory." | Diff MUST be saved to the tmp directory first to maintain an audit trail and handle large files safely. |
+| "It's just a minor change, review isn't needed." | Every change touches production. Minor changes cause major incidents. Full review. |
+| "I'll skip security for this internal service." | Internal services handle sensitive data too. Security review is always REQUIRED. |
+| "The existing tests cover it." | Existing tests don't cover NEW code. Verify test coverage for changed lines. |
+| "I don't need to read the full diff." | Reading only part of the diff means missing cross-file impacts. Read the entire diff. |
