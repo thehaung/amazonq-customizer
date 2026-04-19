@@ -2,6 +2,7 @@ import typer
 from typing import Optional
 from pathlib import Path
 from amazonq_customizer.init_cmd import initialize_directories
+from amazonq_customizer.convert_cmd import convert_skills
 
 app = typer.Typer()
 
@@ -14,9 +15,17 @@ def init(
     initialize_directories(root, is_global)
 
 @app.command()
-def convert():
+def convert(
+    source: Path = typer.Option(..., "--source", help="Source directory containing skills"),
+    is_global: bool = typer.Option(False, "--global", help="Write to ~/.aws/amazonq/prompts/")
+):
     """Convert skills to Amazon Q Prompts."""
-    pass
+    if is_global:
+        prompts_dir = Path.home() / ".aws" / "amazonq" / "prompts"
+    else:
+        prompts_dir = Path.cwd() / "prompts"
+        
+    convert_skills(source, prompts_dir)
 
 if __name__ == "__main__":
     app()
