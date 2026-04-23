@@ -5,6 +5,11 @@ description: Use when reviewing Java code changes, checking a branch diff, audit
 
 # Java Code & Pull Request Review Workflow
 
+**EXECUTION LOGGING:** As your FIRST output, before any other text, you MUST output the following block verbatim:
+> ⚙️ **Amazon Q Execution Log**
+> **Domain:** Java
+> **Active Skill:** java-change-review
+
 ## Overview
 A systematic, multi-pass review process for Java Pull Requests and local branch changes. You MUST perform the review in strict phases, acquiring the data safely, storing it locally, and applying specific specialized lenses only when triggered.
 
@@ -61,6 +66,7 @@ digraph pr_review_flow {
 
 ### Phase 0: Data Acquisition & Diff Extraction
 Before reviewing any code, you MUST acquire the diff using shell commands and save it locally.
+- **PHASE LOGGING:** You MUST output: `> ⚙️ **Execution Log (Phase 0):** Acquiring diff and initializing workspace`
 
 **Scenario A: The user provides a PR Number**
 1. Run `gh pr view <number> --json title,body` to understand the intent.
@@ -83,6 +89,7 @@ Before reviewing any code, you MUST acquire the diff using shell commands and sa
 - If the diff has >50 files, analyze file by file. Do NOT attempt to review the entire diff in one pass.
 
 ### Phase 1: Intent & Architecture Scan
+- **PHASE LOGGING:** You MUST output: `> ⚙️ **Execution Log (Phase 1):** Analyzing intent and architecture with java:code-review.md and java:clean-code.md`
 - **Goal:** Understand *what* this PR/branch does and if the design is sound based on the saved diff.
 - **Action:** Read the diff. Does it solve the stated problem?
 - **ALWAYS:** Apply **REQUIRED SUB-SKILL:** `java:code-review.md` (baseline standards) and **REQUIRED SUB-SKILL:** `java:clean-code.md` (clean code lens).
@@ -91,6 +98,7 @@ Before reviewing any code, you MUST acquire the diff using shell commands and sa
 **STOP. VERIFY:** Did you identify the PR's intent and architectural impact? Which sub-skills (solid-principles, design-patterns, clean-code, code-review) apply based on what you found?
 
 ### Phase 2: Targeted Deep Dives
+- **PHASE LOGGING:** You MUST output: `> ⚙️ **Execution Log (Phase 2):** Performing targeted deep dives (Security, Concurrency, Performance)`
 Do not blindly review line-by-line. Look for specific triggers in the diff:
 - **Trigger:** Endpoints, SQL/JPA queries, or user input? **REQUIRED SUB-SKILL:** `java:security-audit.md`
 - **Trigger:** `@Async`, `Runnable`, `CompletableFuture`, or synchronized blocks? **REQUIRED SUB-SKILL:** `java:concurrency-review.md`
@@ -99,6 +107,7 @@ Do not blindly review line-by-line. Look for specific triggers in the diff:
 **STOP. VERIFY:** Did you check each trigger category? Which triggers were found in the diff? Which sub-skills did you apply?
 
 ### Phase 3: Test Verification (The Iron Law)
+- **PHASE LOGGING:** You MUST output: `> ⚙️ **Execution Log (Phase 3):** Verifying test quality and coverage with java:test-quality.md`
 - **Goal:** Verify the code proves its own correctness.
 - **Action:** Review `src/test/java` changes in the diff.
 - **REQUIRED SUB-SKILL:** `java:test-quality.md` — Check for JUnit 5 usage and AssertJ assertions.
@@ -113,6 +122,7 @@ If you see any of the following, do not proceed to nitpicking. The code must be 
 - **Logic mixed in controllers** instead of delegated to services **REQUIRED SUB-SKILL:** `java:spring-boot-patterns.md`
 
 ### Phase 4: Output Generation
+- **PHASE LOGGING:** You MUST output: `> ⚙️ **Execution Log (Phase 4):** Generating final review output`
 You MUST save the final review result to the local filesystem. Do not just print a wall of text to the chat.
 1. Determine the path based on Phase 0:
     - For PRs: `tmp/<pr-number>/code-review-result.md`

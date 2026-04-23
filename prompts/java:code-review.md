@@ -5,6 +5,11 @@ description: Systematic code review for Java with null safety, exception handlin
 
 # Java Code Review Skill
 
+**EXECUTION LOGGING:** As your FIRST output, before any other text, you MUST output the following block verbatim:
+> ⚙️ **Amazon Q Execution Log**
+> **Domain:** Java
+> **Active Skill:** java-code-review
+
 Systematic code review checklist for Java projects.
 
 ## When to Use
@@ -15,8 +20,11 @@ Systematic code review checklist for Java projects.
 ## Review Strategy
 
 1. **Quick scan** - Understand intent, identify scope
+   - **PHASE LOGGING:** You MUST output: `> ⚙️ **Execution Log (Step 1):** Performing quick scan of intent and scope`
 2. **Checklist pass** - Go through each category below
+   - **PHASE LOGGING:** You MUST output: `> ⚙️ **Execution Log (Step 2):** Applying systematic review checklist`
 3. **Summary** - List findings by severity (Critical → Minor)
+   - **PHASE LOGGING:** You MUST output: `> ⚙️ **Execution Log (Step 3):** Generating summary of findings`
 
 ## Output Format
 
