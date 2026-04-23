@@ -9,7 +9,7 @@ description = "A CLI tool to customize Amazon Q"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
-    "typer==0.23.2",
+    "typer==0.24.1",
 ]
 
 [project.scripts]
@@ -17,7 +17,7 @@ amazonq-customizer = "amazonq_customizer.main:app"
 
 [project.optional-dependencies]
 dev = [
-    "pytest==8.4.2",
+    "pytest==9.0.3",
 ]
 
 [tool.setuptools.packages.find]
