@@ -5,6 +5,11 @@ description: Common design patterns with Java examples (Factory, Builder, Strate
 
 # Design Patterns Skill
 
+**EXECUTION LOGGING:** As your FIRST output, before any other text, you MUST output the following block verbatim:
+> ⚙️ **Amazon Q Execution Log**
+> **Domain:** Java
+> **Active Skill:** design-patterns
+
 Practical design patterns reference for Java with modern examples.
 
 ## When to Use

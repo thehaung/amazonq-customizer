@@ -5,6 +5,11 @@ description: Java security checklist covering OWASP Top 10, input validation, in
 
 # Security Audit Skill
 
+**EXECUTION LOGGING:** As your FIRST output, before any other text, you MUST output the following block verbatim:
+> ⚙️ **Amazon Q Execution Log**
+> **Domain:** Java
+> **Active Skill:** security-audit
+
 Security checklist for Java applications based on OWASP Top 10 and secure coding practices.
 
 ## When to Use

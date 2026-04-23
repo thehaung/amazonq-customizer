@@ -5,6 +5,11 @@ description: Clean Code principles (DRY, KISS, YAGNI), naming conventions, funct
 
 # Clean Code Skill
 
+**EXECUTION LOGGING:** As your FIRST output, before any other text, you MUST output the following block verbatim:
+> ⚙️ **Amazon Q Execution Log**
+> **Domain:** Java
+> **Active Skill:** clean-code
+
 Write readable, maintainable code following Clean Code principles.
 
 ## When to Use
