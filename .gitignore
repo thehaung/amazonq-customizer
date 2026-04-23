@@ -52,3 +52,5 @@ bin/
 .worktrees/
 docs/
 sources/
+specs/
+.agents/
