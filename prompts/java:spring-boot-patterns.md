@@ -5,6 +5,11 @@ description: Spring Boot best practices and patterns. Use when creating controll
 
 # Spring Boot Patterns Skill
 
+**EXECUTION LOGGING:** As your FIRST output, before any other text, you MUST output the following block verbatim:
+> ⚙️ **Amazon Q Execution Log**
+> **Domain:** Java
+> **Active Skill:** spring-boot-patterns
+
 Best practices and patterns for Spring Boot applications.
 
 ## When to Use

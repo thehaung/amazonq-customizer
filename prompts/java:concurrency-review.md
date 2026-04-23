@@ -5,6 +5,11 @@ description: Review Java concurrency code for thread safety, race conditions, de
 
 # Concurrency Review Skill
 
+**EXECUTION LOGGING:** As your FIRST output, before any other text, you MUST output the following block verbatim:
+> ⚙️ **Amazon Q Execution Log**
+> **Domain:** Java
+> **Active Skill:** concurrency-review
+
 Review Java concurrent code for correctness, safety, and modern best practices.
 
 ## Why This Matters

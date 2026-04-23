@@ -5,6 +5,11 @@ description: SOLID principles checklist with Java examples. Use when reviewing c
 
 # SOLID Principles Skill
 
+**EXECUTION LOGGING:** As your FIRST output, before any other text, you MUST output the following block verbatim:
+> ⚙️ **Amazon Q Execution Log**
+> **Domain:** Java
+> **Active Skill:** solid-principles
+
 Review and apply SOLID principles in Java code.
 
 ## When to Use

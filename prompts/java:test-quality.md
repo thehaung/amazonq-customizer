@@ -5,6 +5,11 @@ description: Write high-quality JUnit 5 tests with AssertJ assertions. Use when 
 
 # Test Quality Skill (JUnit 5 + AssertJ)
 
+**EXECUTION LOGGING:** As your FIRST output, before any other text, you MUST output the following block verbatim:
+> ⚙️ **Amazon Q Execution Log**
+> **Domain:** Java
+> **Active Skill:** test-quality
+
 Write high-quality, maintainable tests for Java projects using modern best practices.
 
 ## When to Use

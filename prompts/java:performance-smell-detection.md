@@ -5,6 +5,11 @@ description: Detect potential code-level performance smells in Java - streams, c
 
 # Performance Smell Detection Skill
 
+**EXECUTION LOGGING:** As your FIRST output, before any other text, you MUST output the following block verbatim:
+> ⚙️ **Amazon Q Execution Log**
+> **Domain:** Java
+> **Active Skill:** performance-smell-detection
+
 Identify **potential** code-level performance issues in Java code.
 
 ## Philosophy
