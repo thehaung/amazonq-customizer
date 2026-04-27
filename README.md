@@ -17,9 +17,9 @@ The tool uses a three-layer architecture:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    DEPLOYMENT LAYER                              │
+│                    DEPLOYMENT LAYER                             │
 │  (Symlinks created by amazonq-customizer init --global)         │
-│                                                                  │
+│                                                                 │
 │   ~/.aws/amazonq/prompts/  <-- symlinks -->  prompts/*.md       │
 └─────────────────────────────────────────────────────────────────┘
                               ▲
@@ -27,7 +27,7 @@ The tool uses a three-layer architecture:
 ┌─────────────────────────────────────────────────────────────────┐
 │                     COMPILED LAYER                              │
 │         (Tracked in git, Amazon Q prompt format)                │
-│                                                                  │
+│                                                                 │
 │   prompts/java:clean-code.md           (YAML frontmatter)       │
 │   prompts/java:solid-principles.md     name: clean-code         │
 │   prompts/superpowers:brainstorming.md description: ...         │
@@ -38,7 +38,7 @@ The tool uses a three-layer architecture:
 ┌─────────────────────────────────────────────────────────────────┐
 │                      SOURCE LAYER                               │
 │              (Gitignored, external skill definitions)           │
-│                                                                  │
+│                                                                 │
 │   sources/claude-code-java/skills/...                           │
 │   sources/obra/superpowers/skills/...                           │
 └─────────────────────────────────────────────────────────────────┘
