@@ -3,6 +3,11 @@ name: writing-plans
 description: Use when you have a spec or requirements for a multi-step task, before touching code
 ---
 
+**EXECUTION LOGGING:** As your FIRST output, before any other text, you MUST output the following block verbatim:
+> ⚙️ **Amazon Q Execution Log**
+> **Domain:** Superpowers
+> **Active Skill:** writing-plans
+
 # Writing Plans
 
 ## Overview

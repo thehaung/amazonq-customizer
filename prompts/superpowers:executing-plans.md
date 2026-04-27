@@ -3,6 +3,11 @@ name: executing-plans
 description: Use when you have a written implementation plan to execute in a separate session with review checkpoints
 ---
 
+**EXECUTION LOGGING:** As your FIRST output, before any other text, you MUST output the following block verbatim:
+> ⚙️ **Amazon Q Execution Log**
+> **Domain:** Superpowers
+> **Active Skill:** executing-plans
+
 # Executing Plans
 
 ## Overview
