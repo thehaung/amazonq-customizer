@@ -45,6 +45,7 @@ htmlcov/
 .kiro/
 .specify/
 .gemini/
+.claude/
 
 # Other
 bin/
